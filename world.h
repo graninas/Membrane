@@ -20,8 +20,10 @@ public:
 private:
     QBrush background;
     QBrush circleBrush;
+    QBrush lineBrush;
     QFont textFont;
     QPen circlePen;
+    QPen linePen;
     QPen textPen;
 
     membrane::TwoBraneWorld m_w;

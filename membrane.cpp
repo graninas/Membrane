@@ -31,7 +31,7 @@ TwoBraneWorld createRandomWorld(I dim, I l, I r, I t, I b)
     TwoBraneWorld w = createWorld(dim);
 
     std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution(1,9);
+    std::uniform_int_distribution<int> distribution(1,6);
 
     auto dice = std::bind ( distribution, generator );
 
