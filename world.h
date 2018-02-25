@@ -26,7 +26,12 @@ private:
     QPen linePen;
     QPen textPen;
 
+    int m_nextStepTime;
     membrane::TwoBraneWorld m_w;
+
+private:
+
+    void drawBrane(QPainter *painter, bool topBrane, membrane::I viewPosX, membrane::I viewPosY);
 };
 
 #endif

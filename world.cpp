@@ -7,11 +7,12 @@
 
 using namespace membrane;
 
+const int cStepDelay = 100;
+
 World::World()
 {
+    m_nextStepTime = 0;
     m_w = createRandomWorld(100, 40, 60, 40, 60);
-
-    setCell(m_w, 0, 0, cBottomBrane, cAlive);
 
     QLinearGradient gradient(QPointF(50, -20), QPointF(80, 20));
     gradient.setColorAt(0.0, Qt::white);
@@ -45,21 +46,33 @@ void drawHorizontalLine(QPainter *painter, int y, QBrush &brush, QPen &pen)
 
 void World::paint(QPainter *painter, QPaintEvent *event, int elapsed)
 {
+//    if (elapsed < m_nextStepTime)
+//        return;
+
+    m_nextStepTime = elapsed + cStepDelay;
+
+    m_w = step(m_w);
+
     painter->fillRect(event->rect(), background);
+//    drawBrane(painter, cBottomBrane, 450, 500);
+    drawBrane(painter, cTopBrane, 450, 500);
+}
+
+void World::drawBrane(QPainter *painter, bool topBrane, I viewPosX, I viewPosY)
+{
+    Area& brane = topBrane ? m_w.topBrane : m_w.bottomBrane;
 
     I cellRadius = 10;
     I canvasOffset = 0;
-    I viewPosX = 450;
-    I viewPosY = 500;
 
-    for (auto i = 0; i < m_w.bottomBrane.size(); ++i)
+    for (auto i = 0; i < brane.size(); ++i)
     {
         drawVerticalLine(painter, canvasOffset + i * cellRadius * 2 - cellRadius / 2 - viewPosX, lineBrush, linePen);
-        for (auto j = 0; j < m_w.bottomBrane[i].size(); ++j)
+        for (auto j = 0; j < brane[i].size(); ++j)
         {
             drawHorizontalLine(painter, canvasOffset + j * cellRadius * 2 - cellRadius / 2 - viewPosY, lineBrush, linePen);
 
-            if (m_w.bottomBrane[i][j] == cAlive)
+            if (brane[i][j] == cAlive)
             {
                 auto x = canvasOffset + i * cellRadius * 2 - viewPosX;
                 auto y = canvasOffset + j * cellRadius * 2 - viewPosY;

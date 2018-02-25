@@ -12,9 +12,10 @@ namespace membrane
 using Row = std::vector<unsigned char>;
 using Area = std::vector<Row>;
 using I = std::size_t;
+using State = unsigned char;
 
-const I cDead = 0;
-const I cAlive = 1;
+const State cDead = 0;
+const State cAlive = 1;
 
 const bool cTopBrane = true;
 const bool cBottomBrane = false;
@@ -26,10 +27,12 @@ struct TwoBraneWorld
     Area bottomBrane;
 };
 
-TwoBraneWorld createWorld(I dim);
-TwoBraneWorld createRandomWorld(I dim, I l, I r, I t, I b);
+TwoBraneWorld createWorld(I areaDimension);
+TwoBraneWorld createRandomWorld(I areaDimension, I l, I r, I t, I b);
 
-void setCell(TwoBraneWorld& world, I i, I j, bool topBrane, I state);
+void setCell(TwoBraneWorld& world, I i, I j, bool topBrane, State state);
+
+TwoBraneWorld step(TwoBraneWorld& world);
 
 
 } // namespace membrane
