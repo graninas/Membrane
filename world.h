@@ -31,7 +31,7 @@ private:
 
 private:
 
-    void drawBrane(QPainter *painter, bool topBrane, membrane::I viewPosX, membrane::I viewPosY);
+    void drawBrane(QPainter *painter, bool topBrane, membrane::I canvasOffsetX, membrane::I canvasOffsetY, membrane::I viewPosX, membrane::I viewPosY);
 };
 
 #endif
