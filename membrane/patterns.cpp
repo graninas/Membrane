@@ -4,22 +4,43 @@ namespace membrane {
 
 Pattern block()
 {
-    return createPattern(2, 2, true);
+    return Pattern {
+        { {0, 0, 0, 0}
+        , {0, 1, 1, 0}
+        , {0, 1, 1, 0}
+        , {0, 0, 0, 0}
+        }
+    };
 }
 
 Pattern h3Line()
 {
-    return createPattern(1, 3, true);
+    return Pattern {
+        { {0, 0, 0, 0, 0}
+        , {0, 1, 1, 1, 0}
+        , {0, 0, 0, 0, 0}
+        }
+    };
 }
 
 Pattern v3Line()
 {
-    return createPattern(3, 1, true);
+    return Pattern {
+        { {0, 0, 0}
+        , {0, 1, 0}
+        , {0, 1, 0}
+        , {0, 1, 0}
+        , {0, 0, 0}
+        }
+    };
 }
 
-Pattern point()
+Pattern pointBlueprint()
 {
-    return createPattern(1, 1, true);
+    return Pattern {
+        { {1}
+        }
+    };
 }
 
 }

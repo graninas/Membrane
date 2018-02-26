@@ -20,7 +20,7 @@ World::World()
     _w = createWorld(100);
 
     Schemes bottomSchemes =
-    { createScheme(h3Line(), point())
+    { Scheme { h3Line(), pointBlueprint(), 1, 0 }
     };
 
     _bottomManager = SchemeManager();

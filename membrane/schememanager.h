@@ -1,6 +1,8 @@
 #ifndef SCHEMEMANAGER_H
 #define SCHEMEMANAGER_H
 
+#include <optional>
+
 #include "pattern.h"
 
 namespace membrane
@@ -16,7 +18,7 @@ public:
     I getWLimitations() const;
     I getHLimitations() const;
 
-    Schemes match(const Area &area, I i, I j) const;
+    std::optional<Scheme> match(const Area &area, I x, I y) const;
 
 private:
 

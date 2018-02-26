@@ -23,9 +23,4 @@ Pattern createPattern(I w, I h, bool filled)
     return Pattern {createArea(w, h, filled)};
 }
 
-Scheme createScheme(const Pattern& bottom, const Pattern& top)
-{
-    return Scheme { bottom, top };
-}
-
 } // namespace membrane

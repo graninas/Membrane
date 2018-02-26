@@ -10,7 +10,8 @@ namespace membrane
 Pattern block();
 Pattern h3Line();
 Pattern v3Line();
-Pattern point();
+
+Pattern pointBlueprint();
 
 } // namespace membrane
 

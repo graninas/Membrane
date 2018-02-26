@@ -18,15 +18,15 @@ struct Pattern
 
 struct Scheme
 {
-    Pattern top;
-    Pattern bottom;
+    Pattern base;
+    Pattern prod;
+    I xOffset;
+    I yOffset;
 };
 
 using Schemes = std::vector<Scheme>;
 
 Pattern createPattern(I w, I h, bool filled);
-Scheme createScheme(const Pattern& bottom, const Pattern& top);
-
 
 } // namespace membrane
 

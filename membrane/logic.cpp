@@ -1,5 +1,9 @@
 #include "logic.h"
 
+#include "pattern.h"
+
+#include <optional>
+
 namespace membrane
 {
 
@@ -34,6 +38,21 @@ void createResourceUnsafe(Area& area, I i, I j)
       area[i][j] = cAlive;
 }
 
+void printMatched(Area& area, I x, I y, const std::optional<Scheme>& matched)
+{
+    if (!matched.has_value())
+        return;
+
+    Scheme matchedScheme = matched.value();
+
+    for (I i = 0; i < matchedScheme.prod.area.size(); ++i)
+        for (I j = 0; j < matchedScheme.prod.area[i].size(); ++j)
+        {
+            area[i + x + matchedScheme.xOffset][j + y + matchedScheme.yOffset]
+                    = matchedScheme.prod.area[i][j];
+        }
+}
+
 void applyBranesLogic(const TwoBraneWorld& world1, TwoBraneWorld& world2, SchemeManager &bottomManager, SchemeManager &topManager)
 {
     I wLimitations = std::max(bottomManager.getWLimitations(), topManager.getWLimitations());
@@ -42,8 +61,11 @@ void applyBranesLogic(const TwoBraneWorld& world1, TwoBraneWorld& world2, Scheme
     for (I i = 0; i < world1.areaDimension - wLimitations; ++i)
         for (I j = 0; j < world1.areaDimension - hLimitations; ++j)
         {
-            auto bottomMatched = bottomManager.match(world1.bottomBrane, i, j);
-            auto topMatched    = topManager   .match(world1.topBrane,    i, j);
+            std::optional<Scheme> bottomMatched = bottomManager.match(world1.bottomBrane, i, j);
+            std::optional<Scheme> topMatched    = topManager   .match(world1.topBrane,    i, j);
+
+            printMatched(world2.topBrane,    i, j, bottomMatched);
+            printMatched(world2.bottomBrane, i, j, topMatched);
         }
 }
 
