@@ -1,9 +1,11 @@
-
 #include "world.h"
 
 #include <QPainter>
 #include <QPaintEvent>
 #include <QWidget>
+
+#include "membrane/patterns.h"
+#include "membrane/logic.h"
 
 using namespace membrane;
 
@@ -14,8 +16,21 @@ const I cCellHalfRadius = cCellRadius / 2;
 
 World::World()
 {
-    m_nextStepTime = 0;
-    m_w = createRandomWorld(100, 40, 60, 40, 60);
+    _nextStepTime = 0;
+    _w = createWorld(100);
+
+    Schemes bottomSchemes =
+    { createScheme(h3Line(), point())
+    };
+
+    _bottomManager = SchemeManager();
+    _bottomManager.setSchemes(bottomSchemes);
+
+    _topManager = SchemeManager();
+
+    fill2SideBlocks(_w.bottomBrane, 10);
+    fill2SideBlocks(_w.topBrane, 10);
+    fillRandomUnsafe(_w.bottomBrane, 40, 60, 40, 60, 4);
 
     QLinearGradient gradient(QPointF(50, -20), QPointF(80, 20));
     gradient.setColorAt(0.0, Qt::white);
@@ -49,18 +64,18 @@ void drawHorizontalLine(QPainter *painter, int y, int minX, int maxX, QBrush &br
 
 void World::paint(QPainter *painter, QPaintEvent *event, int elapsed)
 {
-    m_nextStepTime = elapsed + cStepDelay;
+    _nextStepTime = elapsed + cStepDelay;
 
-    m_w = step(m_w);
+    _w = step(_w, _bottomManager, _topManager);
 
     painter->fillRect(event->rect(), background);
     drawBrane(painter, cBottomBrane, 0, 0, 0, 0);
-    drawBrane(painter, cTopBrane, m_w.areaDimension * cCellDiameter + 20, 0, 0, 0);
+    drawBrane(painter, cTopBrane, _w.areaDimension * cCellDiameter + 20, 0, 0, 0);
 }
 
 void World::drawBrane(QPainter *painter, bool topBrane, I canvasOffsetX, I canvasOffsetY, I viewPosX, I viewPosY)
 {
-    Area& brane = topBrane ? m_w.topBrane : m_w.bottomBrane;
+    Area& brane = topBrane ? _w.topBrane : _w.bottomBrane;
 
     I minX = canvasOffsetX - cCellHalfRadius - viewPosX;
     I maxX = canvasOffsetX + brane.size() * cCellDiameter - cCellHalfRadius - viewPosX;
@@ -68,12 +83,12 @@ void World::drawBrane(QPainter *painter, bool topBrane, I canvasOffsetX, I canva
     I minY = canvasOffsetY - cCellHalfRadius - viewPosY;
     I maxY = canvasOffsetY + brane.size() * cCellDiameter - cCellHalfRadius - viewPosY;
 
-    for (auto i = 0; i < brane.size(); ++i)
+    for (I i = 0; i < brane.size(); ++i)
     {
         auto gridX = canvasOffsetX + i * cCellDiameter - cCellHalfRadius - viewPosX;
         drawVerticalLine(painter, gridX, minY, maxY, lineBrush, linePen);
 
-        for (auto j = 0; j < brane[i].size(); ++j)
+        for (I j = 0; j < brane[i].size(); ++j)
         {
             auto gridY = canvasOffsetY + j * cCellDiameter - cCellHalfRadius - viewPosY;
             drawHorizontalLine(painter, gridY, minX, maxX, lineBrush, linePen);

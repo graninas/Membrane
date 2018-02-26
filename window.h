@@ -5,8 +5,6 @@
 
 #include <QWidget>
 
-#include "membrane.h"
-
 class Window : public QWidget
 {
     Q_OBJECT

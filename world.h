@@ -7,7 +7,8 @@
 #include <QPen>
 #include <QWidget>
 
-#include "membrane.h"
+#include "membrane/membrane.h"
+#include "membrane/schememanager.h"
 
 class World
 {
@@ -26,8 +27,10 @@ private:
     QPen linePen;
     QPen textPen;
 
-    int m_nextStepTime;
-    membrane::TwoBraneWorld m_w;
+    int _nextStepTime;
+    membrane::TwoBraneWorld _w;
+    membrane::SchemeManager _topManager;
+    membrane::SchemeManager _bottomManager;
 
 private:
 
