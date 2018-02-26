@@ -43,4 +43,13 @@ Pattern pointBlueprint()
     };
 }
 
+Pattern blockBlueprint()
+{
+    return Pattern {
+        { {1, 1}
+        , {1, 1}
+        }
+    };
+}
+
 }

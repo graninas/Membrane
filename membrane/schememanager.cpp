@@ -40,7 +40,7 @@ bool matchPattern(const Pattern& pattern, const Area& area, I x, I y)
 
 std::optional<Scheme> SchemeManager::match(const Area& area, I x, I y) const
 {
-    for (auto s = 0; s < _schemes.size(); s++)
+    for (I s = 0; s < _schemes.size(); s++)
     {
         if (matchPattern(_schemes.at(s).base, area, x, y))
         {

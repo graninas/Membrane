@@ -21,12 +21,19 @@ World::World()
 
     Schemes bottomSchemes =
     { Scheme { h3Line(), pointBlueprint(), 1, 0 }
+    , // Scheme { block(),  blockBlueprint(), 1, 1 }
+    };
+
+    Schemes topSchemes =
+    { // Scheme { block(),  blockBlueprint(), 1, 1 }
+    , Scheme { v3Line(), pointBlueprint(), 0, 1 }
     };
 
     _bottomManager = SchemeManager();
     _bottomManager.setSchemes(bottomSchemes);
 
     _topManager = SchemeManager();
+    _topManager.setSchemes(topSchemes);
 
     fill2SideBlocks(_w.bottomBrane, 10);
     fill2SideBlocks(_w.topBrane, 10);
