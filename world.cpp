@@ -26,7 +26,7 @@ World::World()
 
     Schemes topSchemes =
     { // Scheme { block(),  blockBlueprint(), 1, 1 }
-    , Scheme { v3Line(), pointBlueprint(), 0, 1 }
+      Scheme { v3Line(), pointBlueprint(), 0, 1 }
     };
 
     _bottomManager = SchemeManager();
